@@ -1,0 +1,43 @@
+<div class="jumbotron">
+    <div class="container">
+        <h2 class="text-warning">
+            Checkout!
+        </h2>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="center-form panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">Confirm and Proceed to Payment</div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>Name</th>
+                        <td>{{data.prefix+" "+data.surname+" "+data.middlename+" "+data.firstname+" "+data.suffix}}</td>
+                    </tr>
+                    <tr>
+                        <th>Email Address</th>
+                        <td>{{data.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone Number</th>
+                        <td>{{data.phone}}</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>{{data.address}}</td>
+                    </tr>
+                    <tr>
+                        <th>Amount to Pay</th>
+                        <td>{{checkoutAmount}}</td>
+                    </tr>
+                </table>
+                <br>
+                <button class="btn btn-lg btn-block btn-primary" type="submit">Pay with Interswitch!</button>
+            </div>
+        </div>
+    </div>
+</div>
