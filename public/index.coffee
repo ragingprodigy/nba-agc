@@ -15,6 +15,9 @@ angular.module 'nbaAGC', [ 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStra
   .when '/checkout',
     templateUrl: 'views/checkout.html'
     controller: 'CheckoutController'
+  .when '/callback',
+    templateUrl: 'views/callback.html'
+    controller: 'CallbackController'
   .otherwise
       redirectTo: '/'
 ]
@@ -23,8 +26,8 @@ angular.module 'nbaAGC', [ 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStra
   mService =
     url: '/api'
 
-    getAmountDue: (yearCalled) ->
-      $http.post this.url + "/amountDue", { yearCalled: yearCalled }
+    getAmountDue: (data) ->
+      $http.post this.url + "/amountDue", data
       .then (r) ->
         r.data
 
@@ -76,19 +79,17 @@ angular.module 'nbaAGC', [ 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStra
 
 ]
 
-.controller 'CheckoutController', [ '$scope', 'Api', 'Session', ( $scope, Api, Session ) ->
+.controller 'CheckoutController', [ '$scope', 'Api', 'Session', '$window', ( $scope, Api, Session, $window ) ->
 
   $scope.data = JSON.parse Session.get('registrantData')
 
-  if $scope.data.yearCalled?
-    # Ask Server to Calculate Amount to be paid
-    Api.getAmountDue $scope.data.yearCalled
-    .then (d) ->
-      $scope.checkoutAmount = d.amount
-  else
-    # Set fixed amount to be paid
-    $scope.checkoutAmount = 250000
+  # Ask Server to Calculate Amount to be paid
+  Api.getAmountDue $scope.data
+  .then (d) ->
+    $scope.txn = d
 
+  $scope.callbackUrl = ->
+    "#{$window.location.origin}/callback"
 ]
 
 String.prototype.hexEncode = ->

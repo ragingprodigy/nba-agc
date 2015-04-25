@@ -14,6 +14,9 @@
       }).when('/checkout', {
         templateUrl: 'views/checkout.html',
         controller: 'CheckoutController'
+      }).when('/callback', {
+        templateUrl: 'views/callback.html',
+        controller: 'CallbackController'
       }).otherwise({
         redirectTo: '/'
       });
@@ -23,10 +26,8 @@
       var mService;
       mService = {
         url: '/api',
-        getAmountDue: function(yearCalled) {
-          return $http.post(this.url + "/amountDue", {
-            yearCalled: yearCalled
-          }).then(function(r) {
+        getAmountDue: function(data) {
+          return $http.post(this.url + "/amountDue", data).then(function(r) {
             return r.data;
           });
         }
@@ -81,15 +82,14 @@
       };
     }
   ]).controller('OthersController', ['$scope', function($scope) {}]).controller('CheckoutController', [
-    '$scope', 'Api', 'Session', function($scope, Api, Session) {
+    '$scope', 'Api', 'Session', '$window', function($scope, Api, Session, $window) {
       $scope.data = JSON.parse(Session.get('registrantData'));
-      if ($scope.data.yearCalled != null) {
-        return Api.getAmountDue($scope.data.yearCalled).then(function(d) {
-          return $scope.checkoutAmount = d.amount;
-        });
-      } else {
-        return $scope.checkoutAmount = 250000;
-      }
+      Api.getAmountDue($scope.data).then(function(d) {
+        return $scope.txn = d;
+      });
+      return $scope.callbackUrl = function() {
+        return $window.location.origin + "/callback";
+      };
     }
   ]);
 

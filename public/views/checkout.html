@@ -13,30 +13,46 @@
                 <div class="panel-title">Confirm and Proceed to Payment</div>
             </div>
             <div class="panel-body">
-                <table class="table table-striped table-bordered">
-                    <tr>
-                        <th>Name</th>
-                        <td>{{data.prefix+" "+data.surname+" "+data.middlename+" "+data.firstname+" "+data.suffix}}</td>
-                    </tr>
-                    <tr>
-                        <th>Email Address</th>
-                        <td>{{data.email}}</td>
-                    </tr>
-                    <tr>
-                        <th>Phone Number</th>
-                        <td>{{data.phone}}</td>
-                    </tr>
-                    <tr>
-                        <th>Address</th>
-                        <td>{{data.address}}</td>
-                    </tr>
-                    <tr>
-                        <th>Amount to Pay</th>
-                        <td>{{checkoutAmount}}</td>
-                    </tr>
-                </table>
-                <br>
-                <button class="btn btn-lg btn-block btn-primary" type="submit">Pay with Interswitch!</button>
+                <form method="POST" action="http://lawpavilionplus.com/payswitch/">
+                    <table class="table table-striped table-bordered">
+                        <tr>
+                            <th>Name</th>
+                            <td>{{data.prefix+" "+data.surname+" "+data.middlename+" "+data.firstname+" "+data.suffix}}</td>
+                        </tr>
+                        <tr>
+                            <th>Email Address</th>
+                            <td>{{data.email}}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone Number</th>
+                            <td>{{data.phone}}</td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td>{{data.address}}</td>
+                        </tr>
+                        <tr>
+                            <th>Transaction Reference</th>
+                            <td>{{txn.txn_ref}}</td>
+                        </tr>
+                        <tr>
+                            <th>Amount to Pay</th>
+                            <td>{{txn.amount}}</td>
+                        </tr>
+                    </table>
+                    <br>
+
+                    <input name="site_name" type="hidden" value="NBA Annual General Conference Registration" />
+                    <input name="cust_id" type="hidden" value="{{data.email}}" />
+                    <input name="cust_name" type="hidden" value="{{txn.txn_ref}}" />
+                    <input name="amount" type="hidden" value="{{txn.amount}}" />
+                    <input name="txn_ref" type="hidden" value="{{txn.txn_ref}}" />
+                    <input name="client_key" type="hidden" value="{{txn.clientKey}}" />
+                    <input name="callback" type="hidden" value="{{callbackUrl()}}" />
+                    <input name="mToken" type="hidden" value="{{txn.mToken}}" />
+
+                    <button class="btn btn-lg btn-block btn-primary" type="submit">Pay with Interswitch!</button>
+                </form>
             </div>
         </div>
     </div>
