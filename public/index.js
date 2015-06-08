@@ -76,12 +76,41 @@
             duration: 5
           });
         } else {
-          Session.set("registrantData", JSON.stringify($scope.d));
-          return $location.path('/checkout');
+          if (confirm("Are you sure?")) {
+            Session.set("registrantData", JSON.stringify($scope.d));
+            return $location.path('/checkout');
+          }
         }
       };
     }
-  ]).controller('OthersController', ['$scope', function($scope) {}]).controller('CheckoutController', [
+  ]).controller('OthersController', [
+    '$scope', '$alert', 'Session', '$location', function($scope, $alert, Session, $location) {
+      var k, results;
+      $scope.years = (function() {
+        results = [];
+        for (k = 2014; k >= 1960; k--){ results.push(k); }
+        return results;
+      }).apply(this);
+      $scope.d = {};
+      return $scope.checkout = function() {
+        var ref;
+        if ($scope.d.name_changed && !((ref = $scope.d.newname) != null ? ref.length : void 0)) {
+          return $alert({
+            title: 'Error!',
+            content: 'Please enter your current name (after it was changed)',
+            placement: 'top-right',
+            type: 'danger',
+            duration: 5
+          });
+        } else {
+          if (confirm("Are you sure?")) {
+            Session.set("registrantData", JSON.stringify($scope.d));
+            return $location.path('/checkout');
+          }
+        }
+      };
+    }
+  ]).controller('CheckoutController', [
     '$scope', 'Api', 'Session', '$window', function($scope, Api, Session, $window) {
       $scope.data = JSON.parse(Session.get('registrantData'));
       Api.getAmountDue($scope.data).then(function(d) {

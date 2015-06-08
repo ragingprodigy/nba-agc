@@ -36,7 +36,7 @@ app.get '/api', (req, res) ->
 
 app.post '/api/amountDue', (req, res) ->
   theYear = parseInt req.body.yearCalled
-  atBar = 2015 - theYear
+  # atBar = 2015 - theYear
 
   txn_data =
     amount: 50000

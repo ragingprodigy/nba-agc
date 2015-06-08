@@ -69,13 +69,31 @@ angular.module 'nbaAGC', [ 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStra
         type: 'danger'
         duration: 5
     else
-      # Save data in Session and Redirect to Checkout
-      Session.set "registrantData", JSON.stringify $scope.d
-      $location.path '/checkout'
+      if confirm "Are you sure?"
+        # Save data in Session and Redirect to Checkout
+        Session.set "registrantData", JSON.stringify $scope.d
+        $location.path '/checkout'
 ]
 
-.controller 'OthersController', [ '$scope', ( $scope ) ->
+.controller 'OthersController', [ '$scope', '$alert', 'Session', '$location', ( $scope, $alert, Session, $location ) ->
 
+  $scope.years = [ 2014..1960 ]
+
+  $scope.d = {}
+
+  $scope.checkout = ->
+    if $scope.d.name_changed and not $scope.d.newname?.length
+      $alert
+        title: 'Error!'
+        content: 'Please enter your current name (after it was changed)'
+        placement: 'top-right'
+        type: 'danger'
+        duration: 5
+    else
+      if confirm "Are you sure?"
+        # Save data in Session and Redirect to Checkout
+        Session.set "registrantData", JSON.stringify $scope.d
+        $location.path '/checkout'
 
 ]
 

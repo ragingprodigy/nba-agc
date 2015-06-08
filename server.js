@@ -57,9 +57,8 @@
   });
 
   app.post('/api/amountDue', function(req, res) {
-    var atBar, theYear, txn_data;
+    var theYear, txn_data;
     theYear = parseInt(req.body.yearCalled);
-    atBar = 2015 - theYear;
     txn_data = {
       amount: 50000,
       txn_ref: randomString(32).toUpperCase(),
