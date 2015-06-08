@@ -21,7 +21,7 @@
   });
 
   connectDb = function() {
-    return sequelize.sync().complete(function(err) {
+    return sequelize.sync().then(function(err) {
       if (!!err) {
         return console.log("Unable to connect to database");
       }

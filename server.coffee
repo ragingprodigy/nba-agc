@@ -13,7 +13,7 @@ sequelize = new Sequelize "nba-agc", "root", "",
 
 connectDb = ->
   sequelize.sync()
-  .complete (err) ->
+  .then (err) ->
     if not not err then console.log "Unable to connect to database"
 
 connectDb()
