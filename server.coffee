@@ -3,6 +3,10 @@ path = require "path"
 logger = require "morgan"
 bodyParser = require "body-parser"
 moment = require "moment"
+
+stormpathExpressSdk = require "stormpath-sdk-express"
+spMiddleware = stormpathExpressSdk.createMiddleware()
+
 mongoose = require "mongoose"
 mongoose.connect "mongodb://nba-agc:graceLIMITED12@dogen.mongohq.com:10039/nba-agc"
 models = require("./models")(mongoose)
@@ -51,7 +55,9 @@ app.listen app.get('port'), ->
 
 app.use logger('tiny')
 
-app.get '/api', (req, res) ->
+spMiddleware.attachDefaults(app)
+
+app.get '/api', spMiddleware.authenticate, (req, res) ->
   res.send {done: false}
 
 
