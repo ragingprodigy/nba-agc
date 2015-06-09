@@ -20,6 +20,7 @@
     "tests"
   ],
   "dependencies": {
-    "stormpath-sdk-angularjs": "~0.5.0"
+    "stormpath-sdk-angularjs": "~0.5.0",
+    "angular-ui-router": "~0.2.15"
   }
 }

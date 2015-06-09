@@ -11,14 +11,14 @@
 <body>
 <div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-static-top" role="navigation" bs-navbar>
     <div class="navbar-header">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" ui-sref="home">
             <span class="glyphicon glyphicon-signal"></span>
             NBA <strong>AGC 2015</strong></a>
     </div>
 
     <ul class="nav navbar-nav">
-        <li data-match-route="/register"><a href="/register">Register For 2015 AGC</a></li>
-        <li data-match-route="/checkStatus"><a href="/checkStatus">Check Registration Details</a></li>
+        <li data-match-route="/register"><a ui-sref="register.bar">Register For 2015 AGC</a></li>
+        <li data-match-route="/checkStatus"><a ui-sref="checkStatus">Check Registration Details</a></li>
     </ul>
 
     <div class="pull-right">
@@ -29,14 +29,14 @@
 
 </div>
 
-<div ng-view></div>
+<div ui-view></div>
 
-    <script src="vendor/angular.js"></script>
+    <script src="app/components/angular/angular.min.js"></script>
     <script src="vendor/angular-strap.js"></script>
     <script src="vendor/angular-strap.tpl.js"></script>
     <script src="vendor/angular-messages.js"></script>
     <script src="vendor/angular-resource.js"></script>
-    <script src="vendor/angular-route.js"></script>
+    <script src="app/components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
     <script src="index.js"></script>
 

@@ -1,27 +1,34 @@
 
-angular.module 'nbaAGC', [ 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap' ]
+angular.module 'nbaAGC', [ 'ngResource', 'ngMessages', 'ui.router', 'mgcrea.ngStrap' ]
 
-.config ['$locationProvider','$routeProvider', ( $locationProvider, $routeProvider )->
+.config ['$stateProvider', '$urlRouterProvider', '$locationProvider', ( $stateProvider, $urlRouterProvider, $locationProvider )->
   $locationProvider.html5Mode true
-  $routeProvider
-  .when '/',
+
+  $urlRouterProvider.otherwise("/home")
+
+  $stateProvider
+  .state 'home',
+    url: '/'
     templateUrl: 'views/index.html'
-  .when '/register',
+  .state 'register',
+    url: '/register'
     templateUrl: 'views/home.html'
-  .when '/registerBar',
+  .state 'register.bar',
+    url: '/bar'
     templateUrl: 'views/register.html'
     controller: 'BarController'
-  .when '/registerOthers',
+  .state 'register.others',
+    url: '/others'
     templateUrl: 'views/others.html'
     controller: 'OthersController'
-  .when '/checkout',
+  .state 'checkout',
+    url: '/checkout'
     templateUrl: 'views/checkout.html'
     controller: 'CheckoutController'
-  .when '/callback',
+  .state 'callback',
+    url: '/callback'
     templateUrl: 'views/callback.html'
     controller: 'CallbackController'
-  .otherwise
-      redirectTo: '/'
 ]
 
 .factory 'Api', ['$http', ($http)->
@@ -59,6 +66,8 @@ angular.module 'nbaAGC', [ 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStra
 .controller 'BarController', [ '$scope', '$alert', 'Session', '$location', ( $scope, $alert, Session, $location )->
 
   $scope.years = [ 2014..1960 ]
+
+  alert "Initd"
 
   $scope.d = {}
 
