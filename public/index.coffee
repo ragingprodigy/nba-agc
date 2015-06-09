@@ -5,6 +5,8 @@ angular.module 'nbaAGC', [ 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStra
   $locationProvider.html5Mode true
   $routeProvider
   .when '/',
+    templateUrl: 'views/index.html'
+  .when '/register',
     templateUrl: 'views/home.html'
   .when '/registerBar',
     templateUrl: 'views/register.html'

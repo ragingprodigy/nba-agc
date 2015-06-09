@@ -4,6 +4,8 @@
     '$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
       $locationProvider.html5Mode(true);
       return $routeProvider.when('/', {
+        templateUrl: 'views/index.html'
+      }).when('/register', {
         templateUrl: 'views/home.html'
       }).when('/registerBar', {
         templateUrl: 'views/register.html',

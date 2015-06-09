@@ -2,21 +2,7 @@ express = require "express"
 path = require "path"
 logger = require "morgan"
 bodyParser = require "body-parser"
-Sequelize = require "sequelize"
 moment = require "moment"
-
-sequelize = new Sequelize "nba-agc", "root", "",
-  port:    3306,
-  host: 'localhost',
-  logging: false
-
-
-connectDb = ->
-  sequelize.sync()
-  .then (err) ->
-    if not not err then console.log "Unable to connect to database"
-
-connectDb()
 
 app = express()
 
