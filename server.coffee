@@ -3,6 +3,41 @@ path = require "path"
 logger = require "morgan"
 bodyParser = require "body-parser"
 moment = require "moment"
+mongoose = require "mongoose"
+mongoose.connect "mongodb://nba-agc:graceLIMITED12@dogen.mongohq.com:10039/nba-agc"
+models = require("./models")(mongoose)
+
+# Seed the App
+models.Lawyer.collection.remove ->
+  # Add new Lawyer Records
+  models.Lawyer.collection.insert [
+    {
+      firstName: "James"
+      middleName: "F"
+      lastName: "Ibori"
+    },
+    {
+      firstName: "Ikechukwu"
+      middleName: "Chukuwuka"
+      lastName: "Kelechukwu"
+    },
+    {
+      firstName: "Sanni"
+      middleName: "M"
+      lastName: "Mohammed"
+    }
+  ], (err, inserted) ->
+    console.log "Inserted #{inserted.length} records"
+
+    models.San.collection.remove ->
+      # Add new San Record
+      models.Lawyer.find (err, records) ->
+        if err then console.log err
+        else
+          models.San.create
+            lawyer: records[0]._id
+          , (err, record) ->
+              console.log "Added one SAN record"
 
 app = express()
 
