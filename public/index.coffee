@@ -1,23 +1,34 @@
 
-angular.module 'nbaAGC', [ 'ngResource', 'ngMessages', 'ui.router', 'mgcrea.ngStrap' ]
+angular.module 'nbaAGC', [ 'ngCookies',
+                           'ngResource',
+                           'ngSanitize',
+                           'ui.router',
+                           'stormpath',
+                           'stormpath.templates', 'ngMessages' ]
 
-.config ['$stateProvider', '$urlRouterProvider', '$locationProvider', ( $stateProvider, $urlRouterProvider, $locationProvider )->
+.config ['$stateProvider', '$locationProvider', ( $stateProvider, $locationProvider )->
   $locationProvider.html5Mode true
 
-  $urlRouterProvider.otherwise("/home")
-
   $stateProvider
+  .state 'login',
+     url: '/login',
+     templateUrl: 'views/login.html'
+     controller: 'LoginCtrl'
+  .state 'register',
+     url: '/register',
+     templateUrl: 'views/signup.html'
+     controller: 'RegisterCtrl'
   .state 'home',
     url: '/'
     templateUrl: 'views/index.html'
-  .state 'register',
-    url: '/register'
+  .state 'attend',
+    url: '/attend'
     templateUrl: 'views/home.html'
-  .state 'register.bar',
+  .state 'attend.bar',
     url: '/bar'
     templateUrl: 'views/register.html'
     controller: 'BarController'
-  .state 'register.others',
+  .state 'attend.others',
     url: '/others'
     templateUrl: 'views/others.html'
     controller: 'OthersController'
@@ -29,6 +40,13 @@ angular.module 'nbaAGC', [ 'ngResource', 'ngMessages', 'ui.router', 'mgcrea.ngSt
     url: '/callback'
     templateUrl: 'views/callback.html'
     controller: 'CallbackController'
+  .state 'details',
+    url: '/details'
+]
+.run [ '$stormpath', ($stormpath) ->
+  $stormpath.uiRouter
+    loginState: 'login'
+    defaultPostLoginState: 'main'
 ]
 
 .factory 'Api', ['$http', ($http)->
@@ -55,6 +73,14 @@ angular.module 'nbaAGC', [ 'ngResource', 'ngMessages', 'ui.router', 'mgcrea.ngSt
   clear: (key) ->
     $window.sessionStorage.removeItem "#{prefix}#{key}"
   }
+]
+
+.controller 'LoginCtrl', ['$scope', ($scope) ->
+  $scope.message = "Hello"
+]
+
+.controller 'RegisterCtrl', ['$scope', ($scope) ->
+
 ]
 
 .controller 'NavbarCtrl', ['$scope', '$location', ($scope, $location)->

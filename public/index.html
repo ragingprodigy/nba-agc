@@ -17,13 +17,24 @@
     </div>
 
     <ul class="nav navbar-nav">
-        <li data-match-route="/register"><a ui-sref="register.bar">Register For 2015 AGC</a></li>
-        <li data-match-route="/checkStatus"><a ui-sref="checkStatus">Check Registration Details</a></li>
+        <li data-match-route="/attend"><a ui-sref="attend.bar">Register For 2015 AGC</a></li>
+        <li if-user data-match-route="/details">
+            <a ui-sref="details">Registration Details</a>
+        </li>
+        <li if-not-user data-match-route="/register">
+            <a ui-sref="register">Register</a>
+        </li>
+        <li if-not-user data-match-route="/login">
+            <a ui-sref="login">Check Registration Details</a>
+        </li>
+        <li if-user>
+            <a ui-sref="home" sp-logout>Logout</a>
+        </li>
     </ul>
 
     <div class="pull-right">
         <ul class="nav navbar-nav">
-            <li><a>Rebuilding a Nation  |  </a></li>
+            <li><a>Rebuilding a Nation  | {{user}}  </a></li>
         </ul>
     </div>
 
@@ -31,12 +42,18 @@
 
 <div ui-view></div>
 
+    <script src="app/components/jquery/dist/jquery.min.js"></script>
     <script src="app/components/angular/angular.min.js"></script>
-    <script src="vendor/angular-strap.js"></script>
-    <script src="vendor/angular-strap.tpl.js"></script>
+    <!--<script src="vendor/angular-strap.js"></script>
+    <script src="vendor/angular-strap.tpl.js"></script>-->
     <script src="vendor/angular-messages.js"></script>
     <script src="vendor/angular-resource.js"></script>
     <script src="app/components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="app/components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="app/components/angular-cookies/angular-cookies.min.js"></script>
+
+    <script src="app/components/stormpath-sdk-angularjs/dist/stormpath-sdk-angularjs.min.js"></script>
+    <script src="app/components/stormpath-sdk-angularjs/dist/stormpath-sdk-angularjs.tpls.min.js"></script>
 
     <script src="index.js"></script>
 
